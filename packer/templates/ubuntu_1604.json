@@ -153,7 +153,8 @@
       ],
       "run_list": [
         "metasploitable::users",
-        "metasploitable::docker"
+        "metasploitable::docker",
+        "metasploitable::flags_2018_linux"
       ]
     }
   ],
