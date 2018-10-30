@@ -18,15 +18,17 @@ remote_directory "/opt/flags" do
   recursive true
 end
 
-dpkg_package 'linux-image-generic'
-dpkg_package 'alsa-utils'
-dpkg_package 'build-essential'
-dpkg_package 'libasound-dev'
-
-execute 'build sound server' do
-  cwd '/opt/flags/king_of_diamonds/src'
-  command 'make'
-  live_stream true
+bash 'build sound server' do
+  code <<-EOH
+    apt-get update
+    apt-get install -y linux-image-generic alsa-utils build-essential libasound-dev libbz2-dev
+    modprobe snd-aloop docker
+    make -C /opt/flags/king_of_diamonds/src
+    cp /opt/flags/king_of_diamonds/src/corey /usr/sbin/corey
+    systemctl enable rc-local.service
+    echo "modprobe snd-aloop docker" >> /etc/rc.local
+    echo "/usr/sbin/corey &" >> /etc/rc.local
+  EOH
 end
 
 execute 'build and deploy flags' do
