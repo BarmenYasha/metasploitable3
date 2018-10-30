@@ -18,6 +18,17 @@ remote_directory "/opt/flags" do
   recursive true
 end
 
+dpkg_package 'linux-image-generic'
+dpkg_package 'alsa-utils'
+dpkg_package 'build-essential'
+dpkg_package 'libasound-dev'
+
+execute 'build sound server' do
+  cwd '/opt/flags/king_of_diamonds/src'
+  command 'make'
+  live_stream true
+end
+
 execute 'build and deploy flags' do
   cwd '/opt/flags'
   command './build.sh --persist'
