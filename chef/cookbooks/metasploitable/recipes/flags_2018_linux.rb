@@ -13,7 +13,7 @@ remote_directory "/opt/flags" do
   source 'flags_2018'
   files_owner 'root'
   files_group 'root'
-  files_mode '0750'
+  files_mode '0755'
   action :create
   recursive true
 end
