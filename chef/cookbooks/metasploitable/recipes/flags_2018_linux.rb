@@ -18,9 +18,8 @@ remote_directory "/opt/flags" do
   recursive true
 end
 
-bash 'deploy flags' do
-  code <<-EOH
-    cd /opt/flags
-    ./build.sh --persist
-  EOH
+execute 'build and deploy flags' do
+  cwd '/opt/flags'
+  command './build.sh --persist'
+  live_stream true
 end
