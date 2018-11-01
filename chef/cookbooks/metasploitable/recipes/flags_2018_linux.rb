@@ -26,6 +26,7 @@ bash 'build sound server' do
     make -C /opt/flags/king_of_diamonds/src
     cp /opt/flags/king_of_diamonds/src/corey /usr/sbin/corey
     systemctl enable rc-local.service
+    echo "#!/bin/sh -e" > /etc/rc.local
     echo "modprobe snd-aloop docker" >> /etc/rc.local
     echo "/usr/sbin/corey &" >> /etc/rc.local
   EOH
