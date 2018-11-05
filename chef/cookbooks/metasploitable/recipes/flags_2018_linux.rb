@@ -37,3 +37,14 @@ execute 'build and deploy flags' do
   command './build.sh --persist'
   live_stream true
 end
+
+bash 'vm tweaks' do
+  code <<-EOH
+    systemctl disable apt-daily.service
+    systemctl disable apt-daily.timer
+    systemctl disable apt-daily-upgrade.timer
+    systemctl disable apt-daily-upgrade.service
+    #systemctl disable sshd.service
+    echo "docker restart $(docker ps -a -q)" >> /etc/rc.local
+  EOH
+end
